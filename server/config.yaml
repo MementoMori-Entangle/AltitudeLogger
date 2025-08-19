@@ -1,0 +1,18 @@
+# 設定ファイル
+
+# DB接続情報
+DB_HOST: 'localhost'
+DB_PORT: 5432
+DB_NAME: 'AltitudeMonitor'
+DB_USER: 'AltitudeLogger'
+DB_PASSWORD: 's#gs1Gk3Dh8sa!g3s'
+TABLE_NAME: 'altitude_log'
+
+# センサー・計算用定数
+SEA_LEVEL_PRESSURE: 1010.6  # hPa
+ELEVATION: 25               # m
+I2C_PORT: 1
+BME280_ADDRESS: 0x76
+
+# 設定ファイル再読み込み間隔（秒）
+RELOAD_INTERVAL: 600

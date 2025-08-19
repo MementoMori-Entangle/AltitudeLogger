@@ -1,0 +1,29 @@
+﻿syntax = "proto3";
+
+package altitudelogger;
+
+option java_package = "altitudelogger";
+option java_outer_classname = "AltitudeLoggerOuterClass";
+
+service AltitudeLogger {
+  rpc GetAltitudeLog (AltitudeLogRequest) returns (AltitudeLogResponse);
+}
+
+message AltitudeLogRequest {
+  string access_token = 1;
+  string start_datetime = 2; // yyyyMMdd hh:mi:ss 形式
+  string end_datetime = 3;   // yyyyMMdd hh:mi:ss 形式
+}
+
+message AltitudeData {
+  string datetime = 1;   // yyyyMMdd hh:mi:ss
+  float altitude = 2;    // 高度
+  float temperature = 3; // 気温
+  float pressure = 4;    // 気圧
+  float sea_level_pressure = 5; // 海面気圧
+  float elevation = 6;   // 海面基準の標高(メートル)
+}
+
+message AltitudeLogResponse {
+  repeated AltitudeData logs = 1;
+}
