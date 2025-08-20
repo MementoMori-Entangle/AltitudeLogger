@@ -32,7 +32,7 @@ DB_USER = config['DB_USER']
 DB_PASSWORD = config['DB_PASSWORD']
 
 # テーブル名
-TABLE_NAME = config['TABLE_NAME']
+ALTITUDE_LOG_TABLE = config['ALTITUDE_LOG_TABLE']
 
 def calculate_altitude_sea_level(pressure_hpa, temperature_c, sea_level_pressure):
     temperature_k = temperature_c + 273.15
@@ -46,7 +46,7 @@ def main():
     cur = conn.cursor()
     # テーブル作成（初回のみ）
     cur.execute(f"""
-        CREATE TABLE IF NOT EXISTS {TABLE_NAME} (
+        CREATE TABLE IF NOT EXISTS {ALTITUDE_LOG_TABLE} (
             timestamp TIMESTAMP PRIMARY KEY,
             altitude REAL,
             temperature REAL,

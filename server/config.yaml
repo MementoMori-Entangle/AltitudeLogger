@@ -1,4 +1,9 @@
 # 設定ファイル
+PORT: 50051
+SLEEP_TIME: 86400
+
+# 認証方式: 'none', 'tls', 'mtls'
+AUTH_MODE: 'mtls'
 
 # DB接続情報
 DB_HOST: 'localhost'
@@ -6,7 +11,8 @@ DB_PORT: 5432
 DB_NAME: 'AltitudeMonitor'
 DB_USER: 'AltitudeLogger'
 DB_PASSWORD: 's#gs1Gk3Dh8sa!g3s'
-TABLE_NAME: 'altitude_log'
+ALTITUDE_LOG_TABLE: 'altitude_log'
+ACCESS_KEYS_TABLE: 'access_keys'
 
 # センサー・計算用定数
 SEA_LEVEL_PRESSURE: 1010.6  # hPa

@@ -10,7 +10,7 @@ service AltitudeLogger {
 }
 
 message AltitudeLogRequest {
-  string access_token = 1;
+  string access_key = 1;
   string start_datetime = 2; // yyyyMMdd hh:mi:ss 形式
   string end_datetime = 3;   // yyyyMMdd hh:mi:ss 形式
 }
