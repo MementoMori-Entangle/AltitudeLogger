@@ -1,9 +1,9 @@
-﻿import bme280
-import psycopg2
+﻿import psycopg2
 import smbus2
 import time
 import yaml
 from datetime import datetime
+from bmp280 import BMP280
 
 # 設定ファイル読み込み関数
 def load_config():
@@ -13,11 +13,11 @@ def load_config():
 # 初回設定ファイル読み込み
 config = load_config()
 
-# BME280設定
+# BMP280設定
 I2C_PORT = config['I2C_PORT']
-BME280_ADDRESS = config['BME280_ADDRESS']
+BMP280_ADDRESS = config['BMP280_ADDRESS']
 bus = smbus2.SMBus(I2C_PORT)
-calibration_params = bme280.load_calibration_params(bus, BME280_ADDRESS)
+bmp280 = BMP280(i2c_dev=bus)
 
 # 定数（初期値）
 SEA_LEVEL_PRESSURE = config['SEA_LEVEL_PRESSURE']
@@ -69,14 +69,13 @@ def main():
                 RELOAD_INTERVAL = config.get('RELOAD_INTERVAL', 600)
                 last_reload = now_time
 
-            data = bme280.sample(bus, BME280_ADDRESS, calibration_params)
-            temperature = data.temperature  # ℃
-            pressure = data.pressure  # hPa
+            temperature = bmp280.get_temperature()  # ℃
+            pressure = bmp280.get_pressure()  # hPa
             altitude = calculate_altitude_sea_level(pressure, temperature, SEA_LEVEL_PRESSURE)
             now = datetime.now()
 
             cur.execute(
-                f"INSERT INTO {TABLE_NAME} (timestamp, altitude, temperature, pressure, sea_level_pressure, elevation) VALUES (%s, %s, %s, %s, %s, %s)",
+                f"INSERT INTO {ALTITUDE_LOG_TABLE} (timestamp, altitude, temperature, pressure, sea_level_pressure, elevation) VALUES (%s, %s, %s, %s, %s, %s)",
                 (now, altitude, temperature, pressure, SEA_LEVEL_PRESSURE, ELEVATION)
             )
             conn.commit()
