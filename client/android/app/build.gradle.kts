@@ -40,7 +40,12 @@ android {
 
     signingConfigs {
         create("release") {
-            storeFile = file(keystoreProperties["storeFile"] ?: "my-release-key.jks")
+            val keystoreFilePath = keystoreProperties["storeFile"] ?: "my-release-key.jks"
+            val keystoreFile = file(keystoreFilePath)
+            if (!keystoreFile.exists()) {
+                error("Keystore file '$keystoreFilePath' does not exist. Please provide a valid keystore file via 'key.properties' or ensure 'my-release-key.jks' is present.")
+            }
+            storeFile = keystoreFile
             storePassword = keystoreProperties["storePassword"] as String?
             keyAlias = keystoreProperties["keyAlias"] as String?
             keyPassword = keystoreProperties["keyPassword"] as String?
