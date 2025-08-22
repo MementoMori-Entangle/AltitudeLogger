@@ -1,7 +1,10 @@
+import bluetooth
 import json
 import os
-import bluetooth
 import time
+
+# SPP UUID
+SPP_UUID = "00001101-0000-1000-8000-00805F9B34FB"
 
 def update_sensor_data(data):
     """
@@ -41,7 +44,7 @@ def run_server():
     server_sock.listen(1)
 
     port = server_sock.getsockname()[1]
-    uuid = "00001101-0000-1000-8000-00805F9B34FB" # Flutterアプリと合わせる
+    uuid = SPP_UUID
 
     bluetooth.advertise_service(server_sock, "AltitudeLoggerServer",
                                 service_id=uuid,
